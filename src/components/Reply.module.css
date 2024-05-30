@@ -1,0 +1,143 @@
+.reply {
+  display: flex;
+  align-items: flex-start;
+  column-gap: .75rem;
+}
+
+.reply > div {
+  flex-grow: 1;
+}
+
+.reply:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
+.reply img {
+  object-fit: cover;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 8px;
+}
+
+.contentWrapper {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: var(--gray-700);
+  border-radius: 8px;
+}
+
+.contentHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.contentHeader strong {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--gray-100);
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+.contentHeader time {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+  line-height: 1.6;
+}
+
+.trashIcon:hover {
+  color: var(--red);
+  cursor: pointer;
+}
+
+.replyOptions {
+  display: flex;
+  column-gap: 1.5rem;
+}
+
+.replyOptions button {
+  color: var(--gray-400);
+  font-size: 0.875rem;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  font-weight: 700;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.replyOptions button:hover {
+  color: var(--gray-100);
+}
+
+.likeButton.active {
+  color: var(--green-300);
+}
+
+/* remove popup */
+
+.removePopupShadow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+
+  display: grid;
+  place-items: center;
+}
+
+.removePopup {
+  max-width: 27rem;
+  border-radius: 8px;
+  padding: 1.5rem 3rem;
+  background-color: var(--gray-800);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.removePopup h3 {
+  color: var(--gray-100);
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+.removePopup p {
+  margin: 1.5rem 0;
+  color: var(--gray-300);
+  line-height: 1.6;
+  max-width: 15rem;
+  text-align: center;
+}
+
+.removePopupOptions {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.removePopupOptions button {
+  border: none;
+  padding: 0.75rem 2rem;
+  color: var(--gray-100);
+  background-color: transparent;
+  font-size: 0.875rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.removePopupOptions button.removeButton {
+  background-color: var(--gray-700);
+  color: var(--red);
+}
+
+.removePopupOptions button:hover {
+  background-color: var(--gray-600);
+}
