@@ -46,9 +46,26 @@
   line-height: 1.6;
 }
 
+.contentHeaderOptions {
+  display: flex;
+  align-items: center;
+  column-gap: .25rem;
+}
+
+.contentHeaderOptions button {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  color: var(--gray-400);
+  cursor: pointer;
+}
+
+.editIcon:hover {
+  color: var(--gray-300);
+}
+
 .trashIcon:hover {
   color: var(--red);
-  cursor: pointer;
 }
 
 .replyOptions {

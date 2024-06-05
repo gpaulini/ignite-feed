@@ -34,7 +34,7 @@
 }
 
 .user span,
-.datePublished  {
+.datePublished {
   font-size: 0.875rem;
   color: var(--gray-400);
   line-height: 1.6;
@@ -61,39 +61,91 @@
   margin-bottom: 1.75rem;
 }
 
+.options {
+  display: grid;
+  grid-template-columns: repeat(3, max-content) auto;
+  column-gap: 1.5rem;
+}
+
+.options button {
+  color: var(--gray-400);
+  font-size: 0.875rem;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  font-weight: 700;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.options button:last-child {
+  justify-self: end;
+}
+
+.options button:hover {
+  color: var(--gray-100);
+}
+
+.likeButton.active {
+  color: var(--green-300);
+}
+
+.trashIcon {
+  justify-self: end;
+}
+
+.trashIcon:hover {
+  color: var(--red);
+  cursor: pointer;
+}
+
 .writeComment {
   display: flex;
-  flex-direction: column;
-  align-items: baseline;
-  row-gap: 1rem;
+  align-items: center;
+  column-gap: .5rem;
 }
 
 .writeComment textarea {
   border-radius: 8px;
   resize: none;
-  height: 96px;
+  line-height: 1.25rem;
   width: 100%;
   overflow-y: auto;
   padding: 1rem;
   color: var(--gray-300);
   background-color: var(--gray-900);
-  border: 1px solid var(--green-500);
+  outline: 1px solid var(--green-500);
 }
 
 .writeComment textarea:focus {
-  border-color: var(--green-300);
-  outline: 0;
+  outline-color: var(--green-300);
+}
+
+.writeComment textarea::-webkit-scrollbar {
+  width: 4px;
+  background-color: transparent;
+}
+
+.writeComment textarea::-webkit-scrollbar-thumb {
+  background-color: var(--gray-800);
+  border-radius: 24px;
 }
 
 .writeComment button {
   border: none;
   border-radius: 8px;
-  padding: .75rem 1rem;
+  padding: .5rem;
   background-color: var(--green-500);
   color: var(--white);
   font-weight: 700;
   transition: background-color .1s;
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
 }
 
 .writeComment button:hover {
@@ -102,4 +154,68 @@
 
 .commentsList {
   margin-top: 2rem;
+}
+
+/* remove popup */
+
+.removePopupShadow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+
+  display: grid;
+  place-items: center;
+}
+
+.removePopup {
+  max-width: 27rem;
+  border-radius: 8px;
+  padding: 1.5rem 3rem;
+  background-color: var(--gray-800);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.removePopup h3 {
+  color: var(--gray-100);
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+.removePopup p {
+  margin: 1.5rem 0;
+  color: var(--gray-300);
+  line-height: 1.6;
+  max-width: 15rem;
+  text-align: center;
+}
+
+.removePopupOptions {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.removePopupOptions button {
+  border: none;
+  padding: 0.75rem 2rem;
+  color: var(--gray-100);
+  background-color: transparent;
+  font-size: 0.875rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.removePopupOptions button.removeButton {
+  background-color: var(--gray-700);
+  color: var(--red);
+}
+
+.removePopupOptions button:hover {
+  background-color: var(--gray-600);
 }
