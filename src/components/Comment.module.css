@@ -32,7 +32,12 @@
   margin-bottom: 1rem;
 }
 
-.contentHeader strong {
+.avatarWrapper {
+  display: flex;
+  gap: 1rem;
+}
+
+.avatarWrapper strong {
   display: block;
   font-size: 0.875rem;
   color: var(--gray-100);
@@ -40,7 +45,7 @@
   font-weight: 700;
 }
 
-.contentHeader time {
+.avatarWrapper time {
   font-size: 0.75rem;
   color: var(--gray-400);
   line-height: 1.6;
@@ -49,7 +54,7 @@
 .contentHeaderOptions {
   display: flex;
   align-items: center;
-  column-gap: .25rem;
+  column-gap: 1.25rem;
 }
 
 .contentHeaderOptions button {
@@ -97,7 +102,7 @@
 }
 
 .replies {
-  padding-left: 4.125rem;
+  padding-left: 2.75rem;
 }
 
 /* remove popup */

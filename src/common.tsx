@@ -1,3 +1,9 @@
+export const currentUser = {
+  name: 'Gabriel Paulini',
+  profession: 'Web Developer',
+  avatar: 'https://github.com/gpaulini.png'
+};
+
 export const defaultAvatarURL =
   "https://images.unsplash.com/photo-1530840197133-665af68f9d71?q=40&w=300&auto=format&fit=crop";
 
@@ -62,3 +68,15 @@ export const formatDateToDescriptive = (date: string) => {
 
   return result;
 };
+
+export const createNewCommentObject = ({
+  author,
+  content,
+  datePublished,
+  likes,
+  owner,
+  replies,
+  isReply
+}: CommentProps) => {
+  return { author, content, datePublished, likes, owner, replies, isReply };
+}

@@ -1,7 +1,7 @@
 import styles from "./Comment.module.css";
 import { useEffect, useState } from "react";
+import { Avatar } from "./Avatar";
 import { ArrowBendUpLeft, Pencil, ThumbsUp, Trash } from "@phosphor-icons/react";
-import { Reply } from "./Reply";
 import { defaultAvatarURL, formatDateToReadable, formatDateToDescriptive } from "../common";
 
 export const Comment = ({
@@ -11,6 +11,7 @@ export const Comment = ({
   likes,
   owner,
   replies,
+  isReply
 }: CommentProps) => {
   const [liked, setLiked] = useState(false);
   const [removePopup, setRemovePopup] = useState(false);
@@ -29,6 +30,7 @@ export const Comment = ({
 
   const handleEdit = (event: React.MouseEvent<HTMLElement>) => { };
 
+  //oldest at the top
   const sortedReplies = (replies && replies.length) ? replies.sort(
     (a, b) => new Date(a.datePublished).getTime() - new Date(b.datePublished).getTime()
   ) : [];
@@ -36,18 +38,20 @@ export const Comment = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.comment}>
-        <img src={author.avatar || defaultAvatarURL} />
         <div>
           <div className={styles.contentWrapper}>
             <div className={styles.contentHeader}>
-              <div>
-                <strong>{author.name}</strong>
-                <time
-                  title={formatDateToReadable(datePublished)}
-                  dateTime={datePublished}
-                >
-                  {formatDateToDescriptive(datePublished)}
-                </time>
+              <div className={styles.avatarWrapper}>
+                <Avatar imgSource={author.avatar || defaultAvatarURL} />
+                <div>
+                  <strong>{author.name}</strong>
+                  <time
+                    title={formatDateToReadable(datePublished)}
+                    dateTime={datePublished}
+                  >
+                    {formatDateToDescriptive(datePublished)}
+                  </time>
+                </div>
               </div>
               {owner && (
                 <div className={styles.contentHeaderOptions}>
@@ -67,10 +71,10 @@ export const Comment = ({
               className={`${styles.likeButton} ${liked ? styles.active : ""}`}
               onClick={handleLike}
             >
-              <ThumbsUp size={20} /> Gostei • {totalLikes}
+              <ThumbsUp size={20} /> Gostei {totalLikes > 0 && (' • ' + totalLikes)}
             </button>
             <button className={styles.replyButton}>
-              <ArrowBendUpLeft size={20} /> Responder • {totalReplies}
+              <ArrowBendUpLeft size={20} /> Responder {(totalReplies > 0 && !isReply) && (' • ' + totalReplies)}
             </button>
           </div>
         </div>
@@ -78,12 +82,13 @@ export const Comment = ({
 
       <div className={styles.replies}>
         {sortedReplies.map((e, i) => (
-          <Reply
+          <Comment
             author={e.author}
             content={e.content}
             datePublished={e.datePublished}
             likes={e.likes}
             owner={e.owner}
+            isReply={true}
             key={`reply-${i}`}
           />
         ))}

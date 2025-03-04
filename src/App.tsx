@@ -1,17 +1,15 @@
+import styles from "./App.module.css";
+
 import { Header } from "./components/Header";
 import { Post } from "./components/Post";
 import { Sidebar } from "./components/Sidebar";
-
-import styles from "./App.module.css";
+import { NewPost } from "./components/NewPost";
+import { currentUser } from "./common";
 
 export const App = () => {
   let posts = [
     {
-      author: {
-        name: "Gabriel Paulini",
-        profession: "Web Developer",
-        avatar: "https://github.com/gpaulini.png",
-      },
+      author: currentUser,
       content: (
         <>
           <p>Fala galeraa 👋</p>
@@ -48,14 +46,12 @@ export const App = () => {
           owner: false,
           replies: [
             {
-              author: {
-                name: "Gabriel Paulini",
-                avatar: "https://github.com/gpaulini.png",
-              },
+              author: currentUser,
               content: "???",
               datePublished: "2024-05-25 17:53:00",
               likes: 0,
               owner: true,
+              isReply: true
             },
             {
               author: { name: "Jorgin do Pneu", avatar: null },
@@ -63,9 +59,10 @@ export const App = () => {
               datePublished: "2024-05-26 17:45:50",
               likes: 1,
               owner: false,
-              replies: []
+              isReply: true
             },
           ],
+          isReply: false
         },
       ],
       datePublished: "2024-05-22 19:34",
@@ -97,7 +94,8 @@ export const App = () => {
           datePublished: "2024-05-23 11:30:50",
           likes: 3,
           owner: false,
-          replies: []
+          replies: [],
+          isReply: false
         },
         {
           author: {
@@ -109,12 +107,14 @@ export const App = () => {
           datePublished: "2024-05-23 13:23:02",
           likes: 0,
           owner: false,
-          replies: []
+          replies: [],
+          isReply: false
         },
       ],
       datePublished: "2024-05-22 19:34",
       likes: 1,
-      owner: false
+      owner: false,
+      isReply: false
     },
   ];
 
@@ -125,6 +125,7 @@ export const App = () => {
       <div className={styles.wrapper}>
         <Sidebar />
         <main>
+          <NewPost />
           {(posts && posts.length) ?
             posts.map((e, i) => (
               <Post

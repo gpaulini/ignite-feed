@@ -6,12 +6,15 @@ interface ContentProps {
   readonly owner: boolean
 }
 
-interface ReplyProps extends ContentProps { } //alias
-
 interface CommentProps extends ContentProps {
-  readonly replies: ReplyProps[] | null
+  readonly replies?: CommentProps[]
+  readonly isReply: boolean
 }
 
 interface PostProps extends ContentProps {
-  readonly comments: CommentProps[] | null
+  readonly comments?: CommentProps[]
+}
+
+interface AvatarProps {
+  readonly imgSource: string 
 }

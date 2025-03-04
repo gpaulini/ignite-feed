@@ -1,14 +1,18 @@
 import styles from "./Post.module.css";
 import { Comment } from "./Comment";
-import { defaultAvatarURL, formatDateToReadable, formatDateToDescriptive } from "../common";
+import { Avatar } from "./Avatar";
+import { currentUser, defaultAvatarURL, formatDateToReadable, formatDateToDescriptive, createNewCommentObject } from "../common";
 import { ChatTeardropText, ThumbsUp, ShareFat, Trash, PaperPlaneRight } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { format } from 'date-fns';
 
 export const Post = ({ author, content, datePublished, comments, likes, owner }: PostProps) => {
   const [liked, setLiked] = useState(false);
   const [removePopup, setRemovePopup] = useState(false);
+  const [postComments, setPostComments] = useState(comments);
   const [totalComments, setTotalComments] = useState(comments ? comments.length : 0);
   const [showWriteComment, setShowWriteComment] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   let totalLikes = liked ? likes + 1 : likes;
 
@@ -26,11 +30,27 @@ export const Post = ({ author, content, datePublished, comments, likes, owner }:
   };
 
   const handleWriteComment = (event: React.MouseEvent<HTMLElement>) => {
-    alert("A enviar comentário...");
+    const commentText = textareaRef.current!.value;
+    if (postComments?.length) {
+      setPostComments([
+        createNewCommentObject({
+          author: currentUser,
+          content: commentText,
+          datePublished: format(new Date(), 'yyy-MM-dd HH:mm:ss'),
+          likes: 0,
+          owner: true,
+          isReply: false
+        }),
+        ...postComments,
+      ]);
+      textareaRef.current!.value = '';
+      setTotalComments(totalComments + 1);
+    }
   };
 
-  const sortedComments = (comments && comments.length) ? comments.sort(
-    (a, b) => new Date(a.datePublished).getTime() - new Date(b.datePublished).getTime()
+  //most recent first
+  const sortedComments = (postComments && postComments.length) ? postComments.sort(
+    (a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime()
   ) : [];
 
   return (
@@ -38,7 +58,7 @@ export const Post = ({ author, content, datePublished, comments, likes, owner }:
       <article className={styles.post}>
         <header className={styles.header}>
           <div className={styles.user}>
-            <img src={author.avatar || defaultAvatarURL} />
+            <Avatar imgSource={author.avatar || defaultAvatarURL} />
             <div>
               <strong>{author.name}</strong>
               <span>{author.profession}</span>
@@ -59,10 +79,10 @@ export const Post = ({ author, content, datePublished, comments, likes, owner }:
               className={`${styles.likeButton} ${liked ? styles.active : ""}`}
               onClick={handleLike}
             >
-              <ThumbsUp size={20} /> Gostei • {totalLikes}
+              <ThumbsUp size={20} /> Gostei {totalLikes && ' • ' + totalLikes}
             </button>
             <button className={styles.commentButton} onClick={handleCommentButton}>
-              <ChatTeardropText size={20} /> Comentar • {totalComments}
+              <ChatTeardropText size={20} /> Comentar {totalComments && ' • ' + totalComments}
             </button>
             <button className={styles.shareButton}>
               <ShareFat size={20} /> Compartilhar
@@ -78,7 +98,7 @@ export const Post = ({ author, content, datePublished, comments, likes, owner }:
         </section>
         {showWriteComment && <section className={styles.writeComment}>
           {/* <strong>Deixe seu feedback</strong> */}
-          <textarea autoFocus placeholder="Escreva um comentário..."></textarea>
+          <textarea ref={textareaRef} autoFocus placeholder="Escreva um comentário..."></textarea>
           <button onClick={handleWriteComment}><PaperPlaneRight size={20} /></button>
         </section>}
         <section className={styles.commentsList}>
@@ -90,6 +110,7 @@ export const Post = ({ author, content, datePublished, comments, likes, owner }:
               likes={e.likes}
               owner={e.owner}
               replies={e.replies}
+              isReply={false}
               key={`comment-${i}`}
             />
           ))}
